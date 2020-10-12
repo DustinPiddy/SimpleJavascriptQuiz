@@ -18,39 +18,33 @@ const scoreContainer = document.getElementById("scoreContainer");
 
 //Questions
 let questions = [
-{
+  {
     question: "What is the most popular game console?",
     imgSrc: " ",
-    choiceA:" ",
-    choiceB:" ",
-    choiceC:" ",
-    correct:" "
-},
-{
-    question: "What is the most popular game console?",
+    choiceA: "Playstation 4",
+    choiceB: "Xbox One",
+    choiceC: "Nintendo Switch",
+    correct: "A",
+  },
+  {
+    question: "Which fps game has the biggest maps?",
     imgSrc: " ",
-    choiceA:" ",
-    choiceB:" ",
-    choiceC:" ",
-    correct:" "
-},
-{
-    question: "What is the most popular game console?",
+    choiceA: "Call of Duty",
+    choiceB: "Battlefield",
+    choiceC: "Tetris",
+    correct: "B",
+  },
+  {
+    question:
+      "What platform offers the best graphics settings while being the most expensive?",
     imgSrc: " ",
-    choiceA:" ",
-    choiceB:" ",
-    choiceC:" ",
-    correct:" "
-},
-
-
-
-
-
-
-
-
-
-
-
+    choiceA: "Playstation 4",
+    choiceB: "Xbox One",
+    choiceC: "PC",
+    correct: "C",
+  },
 ];
+
+//Variables
+const lastQuestion = questions.length - 1;
+let runningQuestion = 0;

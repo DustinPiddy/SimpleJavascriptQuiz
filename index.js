@@ -1,17 +1,12 @@
 //Selecting all Elements
 const start = document.getElementById("start");
 const quiz = document.getElementById("quiz");
-const qImg = document.getElementById("questionImage");
 const question = document.getElementById("question");
-const counter = document.getElementById("counter");
-const timeGauge = document.getElementById("timeGauge");
-
+const qImg = document.getElementById("qImg");
 //Choices
 const choiceA = document.getElementById("A");
 const choiceB = document.getElementById("B");
 const choiceC = document.getElementById("C");
-const choiceD = document.getElementById("D");
-
 //Progress and Score
 const progress = document.getElementById("progress");
 const scoreContainer = document.getElementById("scoreContainer");
@@ -48,3 +43,39 @@ let questions = [
 //Variables
 const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
+let count = 0;
+const questionTime = 10; // 10s
+const gaugeWidth = 150; // 150px
+const gaugeUnit = gaugeWidth / questionTime;
+let TIMER;
+let score = 0;
+
+//Question Rendering
+function renderQuestion() {
+  let q = questions[runningQuestion];
+
+  question.innerHTML = "<p>" + q.question + "</p>";
+  qImg.innerHTML = "<img src=" + q.imgSrc + ">";
+  choiceA.innerHTML = q.choiceA;
+  choiceB.innerHTML = q.choiceB;
+  choiceC.innerHTML = q.choiceC;
+}
+
+start.addEventListener("click", startQuiz);
+
+//Starting the Quiz
+function startQuiz() {
+  start.style.display = "none";
+  renderQuestion();
+  quiz.style.display = "block";
+  renderProgress();
+  renderCounter();
+  TIMER = setInterval(renderCounter, 1000); // 1000ms = 1s
+}
+
+//Progress Rendering
+function renderProgress() {
+  for (let qIndex = 0; qIndex <= lastQuestion; qIndex++) {
+    progress.innerHTML += "<div class='prog' id=" + qIndex + "></div>";
+  }
+}

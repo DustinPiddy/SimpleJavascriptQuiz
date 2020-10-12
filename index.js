@@ -15,7 +15,7 @@ const scoreContainer = document.getElementById("scoreContainer");
 let questions = [
   {
     question: "What is the most popular game console?",
-    imgSrc: " ",
+    imgSrc: "img/ps4.jpg",
     choiceA: "Playstation 4",
     choiceB: "Xbox One",
     choiceC: "Nintendo Switch",
@@ -23,7 +23,7 @@ let questions = [
   },
   {
     question: "Which fps game has the biggest maps?",
-    imgSrc: " ",
+    imgSrc: "img/bf.jpg",
     choiceA: "Call of Duty",
     choiceB: "Battlefield",
     choiceC: "Tetris",
@@ -32,7 +32,7 @@ let questions = [
   {
     question:
       "What platform offers the best graphics settings while being the most expensive?",
-    imgSrc: " ",
+    imgSrc: "img/pc.jpg",
     choiceA: "Playstation 4",
     choiceB: "Xbox One",
     choiceC: "PC",
@@ -78,4 +78,80 @@ function renderProgress() {
   for (let qIndex = 0; qIndex <= lastQuestion; qIndex++) {
     progress.innerHTML += "<div class='prog' id=" + qIndex + "></div>";
   }
+}
+
+//Counter rendering
+function renderCounter() {
+  if (count <= questionTime) {
+    counter.innerHTML = count;
+    timeGauge.style.width = count * gaugeUnit + "px";
+    count++;
+  } else {
+    count = 0;
+//change progress color to red
+    answerIsWrong();
+    if (runningQuestion < lastQuestion) {
+      runningQuestion++;
+      renderQuestion();
+    } else {
+//end the quiz and show the score
+      clearInterval(TIMER);
+      scoreRender();
+    }
+  }
+}
+
+//Cheking Answers
+function checkAnswer(answer) {
+  if (answer == questions[runningQuestion].correct) {
+//correct
+    score++;
+//progress green
+    answerIsCorrect();
+  } else {
+//wrong
+//progress red
+    answerIsWrong();
+  }
+  count = 0;
+  if (runningQuestion < lastQuestion) {
+    runningQuestion++;
+    renderQuestion();
+  } else {
+//Quiz end to show score
+    clearInterval(TIMER);
+    scoreRender();
+  }
+}
+//Correct
+function answerIsCorrect() {
+  document.getElementById(runningQuestion).style.backgroundColor = "#0f0";
+}
+
+//Wrong
+function answerIsWrong() {
+  document.getElementById(runningQuestion).style.backgroundColor = "#f00";
+}
+
+//Score
+function scoreRender() {
+  scoreDiv.style.display = "block";
+
+  //Question %
+  const scorePerCent = Math.round((100 * score) / questions.length);
+
+  //Smiley Face on %
+  let img =
+    scorePerCent >= 80
+      ? "img/5.png"
+      : scorePerCent >= 60
+      ? "img/4.png"
+      : scorePerCent >= 40
+      ? "img/3.png"
+      : scorePerCent >= 20
+      ? "img/2.png"
+      : "img/1.png";
+
+  scoreDiv.innerHTML = "<img src=" + img + ">";
+  scoreDiv.innerHTML += "<p>" + scorePerCent + "%</p>";
 }
